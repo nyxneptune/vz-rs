@@ -5,3 +5,4 @@ edition = "2024"
 
 [profile.release]
 debug = true
+opt-level = 3

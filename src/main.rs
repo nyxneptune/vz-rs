@@ -1,17 +1,25 @@
+use std::io::{Write as _, stdin, stdout};
+use std::str::FromStr as _;
+
 use vz_rs::codec::{format, parse};
 use vz_rs::expand;
 
-fn main() {
-    let mut m = parse("0 1 21 321 4321");
-    for i in 0..150 {
-        m = expand(&m, 3 + i);
-        // Truncate to avoid formatter dying
-        if let Some((j, _)) = m
-            .iter()
-            .enumerate()
-            .find(|(_, c)| *c.iter().max().unwrap() >= 36)
-        {
-            m = Vec::from(&m[..j]);
+fn main() -> ! {
+    loop {
+        print!("Matrix to expand: ");
+        stdout().flush().unwrap();
+        let mut buf1 = String::new();
+        stdin().read_line(&mut buf1).unwrap();
+
+        let mut buf2 = String::new();
+        while usize::from_str(buf2.trim()).is_err() {
+            buf2 = String::new();
+            print!("Index: ");
+            stdout().flush().unwrap();
+            stdin().read_line(&mut buf2).unwrap();
         }
+
+        let n = usize::from_str(buf2.trim()).unwrap();
+        println!("{}", format(&expand(&parse(buf1.trim()), n)));
     }
 }
