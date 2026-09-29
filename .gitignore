@@ -1,0 +1,8 @@
+/target
+
+# Optimization
+flamegraph.svg
+perf*
+
+# Emacs temporaries
+*~
